@@ -1,5 +1,6 @@
 import { MongoClient } from "mongodb"
 
+// take URI and DBs names from '.env.local' file in app folder
 const MONGODB_URI = process.env.MONGODB_URI
 const MONGODB_DB = process.env.MONGODB_DB
 
@@ -41,6 +42,7 @@ export async function connectToDatabase() {
       return {
         client,
         db: client.db(MONGODB_DB),
+        // you can more databases in here
       }
     })
   }
