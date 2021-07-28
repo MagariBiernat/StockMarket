@@ -1,14 +1,13 @@
-import Head from "next/head"
 import { connectToDatabase } from "../lib/mongodb"
+import Head from "./partials/Head"
+import Nav from "./partials/Nav"
+import Footer from "./partials/Footer"
 
 export default function Home({ isConnected }) {
   return (
     <div className="container">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+      <Head title="Stock Market" />
+      <Nav />
       <main>
         <h1 className="title">
           Welcome to <a href="https://nextjs.org">Next.js with MongoDB!</a>
@@ -58,16 +57,7 @@ export default function Home({ isConnected }) {
         </div>
       </main>
 
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
+      <Footer />
 
       <style jsx>{`
         .container {
