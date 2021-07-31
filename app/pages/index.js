@@ -1,4 +1,4 @@
-import { connectToDatabase } from "../lib/mongodb"
+import { connectToDatabase } from "../utils/mongodb"
 import Head from "./partials/Head"
 import Nav from "./partials/Nav"
 import Footer from "./partials/Footer"
