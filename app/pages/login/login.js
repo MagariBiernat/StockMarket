@@ -1,44 +1,39 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 
-import axios from "axios";
+import axios from "axios"
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [value, setValue] = useState({})
 
-  const handleChangeEmail = (e) => {
-    setEmail({ [e.target.name]: e.target.value });
-  };
+  const handleChangeValues = (e) => {
+    setValue({ ...value, [e.target.name]: e.target.value })
+  }
 
-  const handleChangePassword = (e) => {
-    setPassword({ [e.target.name]: e.target.value });
-  };
+  console.log(value)
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(email);
-    console.log(password);
+    e.preventDefault()
 
     const data = {
-      email: email,
-      password: password,
-    };
+      email: value.email,
+      password: value.password,
+    }
 
     axios
-      .post("http://localhost:3000/login", data)
+      .post("http://localhost:3000/api/login", data)
       .then((res) => {
-        console.log(res);
+        console.log(res)
       })
       .catch((err) => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
         <input
-          onChange={handleChangeEmail}
+          onChange={handleChangeValues}
           type="email"
           name="email"
           placeholder="email"
@@ -46,7 +41,7 @@ const LoginForm = () => {
       </div>
       <div>
         <input
-          onChange={handleChangePassword}
+          onChange={handleChangeValues}
           type="password"
           name="password"
           placeholder="password"
@@ -54,7 +49,7 @@ const LoginForm = () => {
       </div>
       <button type="submit">Submit</button>
     </form>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm
