@@ -1,10 +1,5 @@
-import React from "react";
-import Login from "./login/login";
+import React from "react"
 
 export default function _app({ Component, pageProps }) {
-  return (
-    <div>
-      <Login />
-    </div>
-  );
+  return <Component {...pageProps} />
 }
