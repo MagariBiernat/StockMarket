@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
-
-const SECRET_KEY =
-  "f51173edb96636075ae6ff028a25e647583cb8dc40cf38f78a7287d3987d6a78e8f5e940932d7933607ca0a1099e1faa97eff60e73a355b469fa62493ecb8e46";
-
+import jwtDecode from "jwt-decode";
+import jwt from "jsonwebtoken";
+import { LOGIN, LOGOUT } from "../";
 const LoginForm = () => {
   const [value, setValue] = useState({});
-  const [token, setToken] = useState({});
 
   const handleChangeValues = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });
@@ -26,16 +24,22 @@ const LoginForm = () => {
     axios
       .post("http://localhost:3000/api/login", data)
       .then((res) => {
-        console.log(res);
+        localStorage.setItem("storedToken", res.data.token);
+        const decoded = jwtDecode(res.data.token);
+        decoded.exp;
+        console.log(decoded);
+        if (data) {
+          if (user.exp) {
+            if (Date.now() > user?.exp * 1000) {
+              dispatch(actions.authSucces(res.data.token, user));
+            }
+          }
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  useEffect(() => {
-    localStorage.setItem("storedToken", SECRET_KEY);
-  });
 
   return (
     <form onSubmit={handleSubmit}>
