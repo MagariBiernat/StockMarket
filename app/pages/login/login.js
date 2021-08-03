@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
-import jwtDecode from "jwt-decode";
-import jwt from "jsonwebtoken";
-import { LOGIN, LOGOUT } from "../";
+
 const LoginForm = () => {
   const [value, setValue] = useState({});
 
@@ -25,16 +23,6 @@ const LoginForm = () => {
       .post("http://localhost:3000/api/login", data)
       .then((res) => {
         localStorage.setItem("storedToken", res.data.token);
-        const decoded = jwtDecode(res.data.token);
-        decoded.exp;
-        console.log(decoded);
-        if (data) {
-          if (user.exp) {
-            if (Date.now() > user?.exp * 1000) {
-              dispatch(actions.authSucces(res.data.token, user));
-            }
-          }
-        }
       })
       .catch((err) => {
         console.log(err);

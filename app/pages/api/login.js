@@ -7,6 +7,7 @@ import {
 import bcrypt from "bcrypt";
 import User from "../../models/User";
 import jwt from "jsonwebtoken";
+import { createConnection } from "mongoose";
 
 const SECRET_KEY =
   "f51173edb96636075ae6ff028a25e647583cb8dc40cf38f78a7287d3987d6a78e8f5e940932d7933607ca0a1099e1faa97eff60e73a355b469fa62493ecb8e46";
@@ -50,14 +51,18 @@ export default async function handler(req, res) {
               expiresIn: 65000,
             },
             (err, token) => {
+              console.log(err, token);
               return res.json({ token });
             }
           );
-
-          return res.json({ token2 });
         });
       });
   } else {
     return res.status(422).json({ message: "nie wyszlo" });
   }
 }
+export const config = {
+  api: {
+    externalResolver: true,
+  },
+};

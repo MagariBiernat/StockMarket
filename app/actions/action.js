@@ -1,5 +1,5 @@
-export const ADD = "LOGIN";
-export const DELETE = "LOGOUT";
+export const LogIn = "LOGIN";
+export const LogOut = "LOGOUT";
 
 export const LogIn = () => ({
   type: LOGIN,

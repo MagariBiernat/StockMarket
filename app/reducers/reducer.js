@@ -1,4 +1,6 @@
-const AuthReducer = (state, action) => {
+import { LOGIN, LOGOUT } from "../actions/action";
+
+export const AuthReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
       return {};
