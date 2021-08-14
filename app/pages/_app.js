@@ -1,5 +1,6 @@
-import React, { useEffect } from "react"
-import ThemeProvider from "../context/ThemeContext"
+import React, { useContext, useEffect } from "react"
+import ThemeProvider, { ThemeContext } from "../context/ThemeContext"
+import { ThemeProvider as StyledComponentsThemeProvider } from "styled-components"
 import jwtDecode from "jwt-decode"
 import { Provider, useSelector, useDispatch } from "react-redux"
 import { useStore } from "../redux/store"
@@ -25,6 +26,7 @@ export default function _app({ Component, pageProps }) {
 
 export const AuthComponent = ({ Component, pageProps }) => {
   const { isAuthenticated, user } = useSelector((state) => state.auth)
+  const { theme } = useContext(ThemeContext)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -33,7 +35,6 @@ export const AuthComponent = ({ Component, pageProps }) => {
       const decoded = jwtDecode(token)
       if (Date.now() > decoded?.exp * 1000) {
         localStorage.removeItem("storedToken")
-
         dispatch({ type: AUTH_LOGOUT })
       } else {
         console.log("token is alright")
@@ -41,7 +42,9 @@ export const AuthComponent = ({ Component, pageProps }) => {
     }
   }, [])
 
-  console.log(isAuthenticated, user)
-
-  return <Component {...pageProps} />
+  return (
+    <StyledComponentsThemeProvider theme={theme}>
+      <Component {...pageProps} />
+    </StyledComponentsThemeProvider>
+  )
 }

@@ -1,8 +1,13 @@
-import React from "react"
+import React, { useContext } from "react"
 import styled from "styled-components"
-
+import { ThemeContext } from "../context/ThemeContext"
 const Navbar = () => {
-  return <nav>elo navbar</nav>
+  const { theme, setTheme } = useContext(ThemeContext)
+  return (
+    <nav>
+      <button onClick={() => setTheme()}> change context</button>elo navbar
+    </nav>
+  )
 }
 
 export default Navbar

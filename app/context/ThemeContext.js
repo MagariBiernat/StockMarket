@@ -1,21 +1,25 @@
 import React, { useEffect, useState, createContext } from "react"
+import { lightMode, darkMode } from "../constants/ColorsModes"
 
 export const ThemeContext = createContext()
 
 function useTheme() {
   if (typeof window !== "undefined") {
     const storageName = "themeStockMarket"
-    const storageThemeState = localStorage.getItem(storageName)
-      ? localStorage.getItem(storageName)
-      : false
+    const storageThemeState = JSON.parse(localStorage.getItem(storageName))
+      ? JSON.parse(localStorage.getItem(storageName))
+      : darkMode
 
-    const [theme, setTheme] = useState(
-      storageThemeState == "true" ? true : false
-    )
+    const [theme, setTheme] = useState(storageThemeState)
 
     const changeTheme = () => {
-      setTheme(!theme)
-      localStorage.setItem(storageName, !theme)
+      if (theme.name === lightMode.name) {
+        setTheme(darkMode)
+        localStorage.setItem(storageName, JSON.stringify(darkMode))
+      } else {
+        setTheme(lightMode)
+        localStorage.setItem(storageName, JSON.stringify(lightMode))
+      }
     }
 
     return [theme, changeTheme]
