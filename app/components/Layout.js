@@ -2,10 +2,12 @@ import React from "react"
 import styled, { createGlobalStyle } from "styled-components"
 import Navbar from "./Navbar"
 import Footer from "./Footer"
+import SEO from "./SEO"
 
 const Layout = ({ children, pageMeta }) => {
   return (
     <Wrapper>
+      <SEO title={pageMeta?.title} description={pageMeta?.description} />
       <GlobalStyle />
       <Navbar />
       <main>{children}</main>
@@ -25,6 +27,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     box-sizing:border-box;
+    font-family: Play, sans-serif;
   }
 `
 
