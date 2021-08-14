@@ -2,14 +2,22 @@ import React, { useEffect } from "react"
 import ThemeProvider from "../context/ThemeContext"
 import jwtDecode from "jwt-decode"
 import { Provider, useSelector, useDispatch } from "react-redux"
-import store from "../redux/store"
+import { useStore } from "../redux/store"
+import { persistStore } from "redux-persist"
+import { PersistGate } from "redux-persist/integration/react"
 import { AUTH_LOGOUT } from "../redux/types"
 
 export default function _app({ Component, pageProps }) {
+  const store = useStore(pageProps.initialReduxState)
+  const persistor = persistStore(store, {}, function () {
+    persistor.persist()
+  })
   return (
     <Provider store={store}>
       <ThemeProvider>
-        <AuthComponent Component={Component} pageProps={pageProps} />
+        <PersistGate loading={<div>loading</div>} persistor={persistor}>
+          <AuthComponent Component={Component} pageProps={pageProps} />
+        </PersistGate>
       </ThemeProvider>
     </Provider>
   )
@@ -24,10 +32,14 @@ export const AuthComponent = ({ Component, pageProps }) => {
     if (token) {
       const decoded = jwtDecode(token)
       if (Date.now() > decoded?.exp * 1000) {
+        localStorage.removeItem("storedToken")
+
         dispatch({ type: AUTH_LOGOUT })
+      } else {
+        console.log("token is alright")
       }
     }
-  })
+  }, [])
 
   console.log(isAuthenticated, user)
 
